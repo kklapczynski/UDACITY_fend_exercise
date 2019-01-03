@@ -2,14 +2,14 @@
 cats = [
     {
         id: 0,
-        name: 'kitty',
+        name: 'Kitty',
         imgPath: 'images\\cat_large.jpg',
         numberOfClicks: 0,
         addClick() {this.numberOfClicks++;}
     },
     {
         id: 1,
-        name: 'chewie',
+        name: 'Chewie',
         imgPath: 'images\\cat_2_large.jpg',
         numberOfClicks: 0,
         addClick() {this.numberOfClicks++;}
@@ -21,9 +21,10 @@ const container = document.getElementsByClassName('container').item(0);
 for (cat of cats) {
     const photoHtml = `
         <div class="photo">
-            <img id= "${cat.id}" src="${cat.imgPath}" alt="Little cat photo">
-            <p id="cat-info-${cat.id}" class="clicks-info">Cat was clicked ${cat.numberOfClicks} times.</p>
+            <img class="cat-photo" id= "${cat.id}" src="${cat.imgPath}" alt="Little cat photo">
+            <p id="cat-info-${cat.id}" class="clicks-info">${cat.name} was clicked ${cat.numberOfClicks} times.</p>
         </div>
+        <div class="divider"></div>
     `;
     container.insertAdjacentHTML('beforeend', photoHtml);
 }
@@ -46,7 +47,7 @@ updateClicksNumber = (id) => {
 
 // update view
 updateClickNumberView = (id, cat) => {
-    document.getElementById(`cat-info-${id}`).textContent = `Cat was clicked ${cat.numberOfClicks} times.`;
+    document.getElementById(`cat-info-${id}`).textContent = `${cat.name} was clicked ${cat.numberOfClicks} times.`;
     return;
 }
 
