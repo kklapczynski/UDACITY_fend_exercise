@@ -15,11 +15,15 @@ img, embed, object, video {
     max-width: 700px;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+}
+
+.cats-list {
+    width: 15%;
 }
 
 .photo {
-    width: 100%;
+    width: 85%;
     flex: 1 1 auto;
 }
 
