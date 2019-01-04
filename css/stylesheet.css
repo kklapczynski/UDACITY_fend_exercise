@@ -22,6 +22,10 @@ img, embed, object, video {
     width: 15%;
 }
 
+.cats-list li {
+    cursor: pointer;
+}
+
 .photo {
     width: 85%;
     flex: 1 1 auto;
