@@ -1,3 +1,13 @@
+const DOMelements = {
+    adminButton: document.getElementById('admin'),
+    adminForm: document.getElementById('adminForm'),
+    btnCancelForm: document.getElementById('btnCancel'),
+    formInputName: document.getElementById('name'),
+    formInputUrl: document.getElementById('url'),
+    formInputNumber: document.getElementById('number'),
+
+}
+
 const model = {
     cats: [
         {
@@ -46,6 +56,7 @@ const model = {
 };
 
 const controller = {
+
     init() {
         catListView.init();
         catView.init();
@@ -66,7 +77,35 @@ const controller = {
         model.currentCat = model.cats[catId];
     },
     // event listeners
+
+
     setEventListeners() {
+        // DONE: add event listener for ADMIN button: show form with default current cat values
+        DOMelements.adminButton.addEventListener('click', () => {
+            adminView.setFormView();
+            adminView.showAdminForm();
+        });
+        // TODO: event listener for form buttons:
+        // DONE CANCEL: turn off admin mode
+        DOMelements.btnCancelForm.addEventListener('click', () => {
+            DOMelements.adminForm.style.visibility = 'hidden';
+        });
+        // SAVE: change model and update view
+        DOMelements.adminForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // get values of form
+            const formName = DOMelements.formInputName.value;
+            const formUrl = DOMelements.formInputUrl.value;
+            const formNumber = DOMelements.formInputNumber.value;
+            // run model methods to set new values for cat properties
+            model.currentCat.name = formName;
+            model.currentCat.imgPath = formUrl;
+            model.currentCat.numberOfClicks = formNumber;
+            // update catView
+            catView.displayCat(model.currentCat);
+            // hide admin from
+            DOMelements.adminForm.style.visibility = 'hidden';
+        });
         // show photo of cat cliked on the list
         document.getElementsByClassName('cats-list').item(0).addEventListener('click', (e) => {
             const target = e.target;
@@ -79,16 +118,34 @@ const controller = {
             const cat = model.cats.filter(item => {return item.id == catId; })[0];
             catView.displayCat(cat);
             this.setCurrentCat(cat.id);
+            adminView.setFormView();
         });
 
         document.getElementsByClassName('photo').item(0).addEventListener('click', (e) => {
             model.currentCat.numberOfClicks++;
             catView.displayCat(model.currentCat);
+            adminView.updateFormInputNumberValue();
             return;
         });
     }
 
 };
+const adminView = {
+    setFormView() {
+        // set current input name value
+        DOMelements.formInputName.value = controller.getCurrentCat().name;
+        DOMelements.formInputUrl.value = controller.getCurrentCat().imgPath;
+        DOMelements.formInputNumber.value = controller.getCurrentCat().numberOfClicks;
+    },
+
+    showAdminForm() {
+        DOMelements.adminForm.style.visibility = 'visible';
+    },
+
+    updateFormInputNumberValue() {
+        DOMelements.formInputNumber.value = controller.getCurrentCat().numberOfClicks;
+    }
+}
 
 const catListView = {
     init() {
